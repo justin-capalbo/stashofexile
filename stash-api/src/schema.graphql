@@ -1,3 +1,45 @@
 type Query {
     hello: String!
+    tabs(input: GetTabsInput!): [Tab!]
+}
+
+input GetTabsInput {
+    creds: AccountInfo!
+}
+
+input GetStashInput {
+    creds: AccountInfo!
+    tabs: [Int!]
+}
+
+input AccountInfo {
+    poeSessId: String!
+    accountName: String!
+    league: String!
+}
+
+type Stash {
+    numTabs: Int!
+    tabs: [Tab!]
+    items: [StashItem!]
+}
+
+type Tab {
+    name: String!
+    index: Int!
+    type: String!
+    color: Color!
+}
+
+type Color {
+    r: Int!,
+    g: Int!,
+    b: Int!
+}
+
+type StashItem {
+    name: String
+    typeLine: String!
+    stackSize: Int!
+    maxStackSize: Int!
 }
