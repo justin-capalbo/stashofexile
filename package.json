@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "dev": "yarn wsrun dev",
+    "lint": "yarn tslint \"./**/*.ts\"",
+    "fix": "yarn lint --fix"
+  },
   "workspaces": [
     "stash-api"
   ],

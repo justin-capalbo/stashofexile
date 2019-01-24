@@ -11,5 +11,6 @@
         "one-line": [false],
         "ordered-imports": [false],
         "one-variable-per-declaration": [false]
-    }
+    },
+    "linterOptions": { "exclude": ["**/node_modules/**"]}
 }

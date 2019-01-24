@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "yarn tslint './src/**/*.ts*'",
-    "fix": "yarn lint --fix",
-    "dev": "ts-node src/index.ts"
+    "start": "dotenv -- nodemon -e ts,graphql -x node -r ts-node/register src/index.ts",
+    "dev": "dotenv -- nodemon -e ts,graphql -x node --inspect -r ts-node/register src/index.ts"
   },
   "devDependencies": {
+    "@types/node": "^10.12.18",
+    "dotenv-cli": "^1.4.0",
+    "graphql-cli": "^3.0.6",
+    "nodemon": "^1.18.9",
     "ts-node": "^8.0.1"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.17.0"
   }
 }
