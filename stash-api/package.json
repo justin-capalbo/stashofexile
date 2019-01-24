@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "lint": "yarn tslint './src/**/*.ts*'",
+    "fix": "yarn lint --fix",
     "dev": "ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^8.0.1"
   }
 }
