@@ -4,7 +4,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "yarn wsrun dev",
+    "run-all": "yarn wsrun --exclude-missing",
+    "dev": "yarn run-all dev",
     "lint": "yarn tslint \"./**/*.ts\"",
     "fix": "yarn lint --fix"
   },
