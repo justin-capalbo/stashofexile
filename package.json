@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "lint": "yarn tslint \"./**/*.ts\"",
+    "fix": "yarn lint --fix"
+  },
   "workspaces": [
     "stash-api"
   ],
