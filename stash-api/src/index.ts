@@ -9,6 +9,6 @@ server.start({
 		credentials: true,
 		origin: process.env.FRONTEND_URL,
 	},
-}, (callback) => {
-	console.log(`Server is now running on http://localhost:${callback.port}`);
+}, () => {
+	console.log(`Server is now running on http://localhost:4000`);
 });

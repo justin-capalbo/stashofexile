@@ -18,12 +18,6 @@ input AccountInfo {
     league: String!
 }
 
-type Stash {
-    numTabs: Int!
-    tabs: [Tab!]
-    items: [StashItem!]
-}
-
 type Tab {
     name: String!
     index: Int!
@@ -35,11 +29,4 @@ type Color {
     r: Int!,
     g: Int!,
     b: Int!
-}
-
-type StashItem {
-    name: String
-    typeLine: String!
-    stackSize: Int!
-    maxStackSize: Int!
 }
