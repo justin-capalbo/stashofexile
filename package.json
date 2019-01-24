@@ -1,0 +1,14 @@
+{
+  "name": "stashofexile",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "stash-api"
+  ],
+  "devDependencies": {
+    "tslint": "^5.12.1",
+    "typescript": "^3.2.4",
+    "wsrun": "^3.6.2"
+  }
+}
