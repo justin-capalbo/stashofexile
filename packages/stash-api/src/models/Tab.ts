@@ -1,6 +1,6 @@
 import Color from "./Color";
 
-type Tab = {
+export type Tab = {
 	name: string,
 	index: number,
 	type: string,

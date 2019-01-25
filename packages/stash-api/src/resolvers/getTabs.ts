@@ -1,8 +1,8 @@
-import { TabsArgs, Tab } from "../models";
+import { TabsArgs, TabData, Tab } from "../models";
 import axios, { AxiosRequestConfig } from "axios";
 import { PoeTabsResponse } from "poe-models";
 
-const getTabs = async (args: TabsArgs): Promise<Tab[]> => {
+const getTabs = async (args: TabsArgs): Promise<TabData> => {
 	const { accountName, league, poeSessId } = args.poeInfo;
 	const url = `${process.env.STASH_API}?accountName=${accountName}&league=${league}&tabs=1`;
 	const headers = {
@@ -14,13 +14,16 @@ const getTabs = async (args: TabsArgs): Promise<Tab[]> => {
 		headers,
 	};
 	const response = await axios(request);
-	const tabData: PoeTabsResponse = response.data;
-	return tabData.tabs.map((tab): Tab => ({
-		name: tab.n,
-		index: tab.i,
-		type: tab.type,
-		color: { ...tab.colour },
-	}));
+	const responseData: PoeTabsResponse = response.data;
+	return {
+		numTabs: responseData.numTabs,
+		tabs: responseData.tabs.map((tab): Tab => ({
+			name: tab.n,
+			index: tab.i,
+			type: tab.type,
+			color: { ...tab.colour },
+		})),
+	};
 };
 
 export default getTabs;
