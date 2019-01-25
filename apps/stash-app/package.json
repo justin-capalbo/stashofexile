@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "get-schema": "apollo service:download --endpoint=http://localhost:4000 ./models/schema/schema.json",
+    "make-types": "apollo client:codegen --target=typescript --localSchemaFile=./models/schema/schema.json --includes=./**/*.tsx ./models",
+    "codegen": "yarn get-schema && yarn make-types",
     "dev": "next ."
   },
   "dependencies": {
@@ -25,6 +28,7 @@
   "devDependencies": {
     "@types/next": "^7.0.6",
     "@types/react": "^16.7.20",
-    "@types/react-dom": "^16.0.11"
+    "@types/react-dom": "^16.0.11",
+    "apollo": "^2.3.1"
   }
 }
