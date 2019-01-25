@@ -6,7 +6,7 @@
   "scripts": {
     "run-all": "yarn wsrun --exclude-missing",
     "dev": "yarn run-all dev",
-    "lint": "yarn tslint \"./**/*.ts\"",
+    "lint": "yarn tslint -c tslint.json \"./**/*.ts\"",
     "fix": "yarn lint --fix"
   },
   "workspaces": [
