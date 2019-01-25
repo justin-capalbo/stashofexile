@@ -1,15 +1,10 @@
 type Query {
     hello: String!
-    tabs(input: GetTabsInput!): [Tab!]
+    getTabs(input: GetTabsInput!): [Tab!]
 }
 
 input GetTabsInput {
     creds: AccountInfo!
-}
-
-input GetStashInput {
-    creds: AccountInfo!
-    tabs: [Int!]
 }
 
 input AccountInfo {

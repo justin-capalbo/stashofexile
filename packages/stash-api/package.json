@@ -12,7 +12,8 @@
     "dotenv-cli": "^1.4.0",
     "graphql-cli": "^3.0.6",
     "nodemon": "^1.18.9",
-    "ts-node": "^8.0.1"
+    "ts-node": "^8.0.1",
+    "poe-models": "*"
   },
   "dependencies": {
     "axios": "^0.18.0",
