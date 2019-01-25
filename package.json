@@ -10,7 +10,8 @@
     "fix": "yarn lint --fix"
   },
   "workspaces": [
-    "stash-api"
+    "packages/stash-api", 
+    "packages/poe-models"
   ],
   "devDependencies": {
     "tslint": "^5.12.1",
