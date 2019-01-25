@@ -1,12 +1,17 @@
 type Query {
     hello: String!
-    getTabs(poeInfo: PoeInfo!): [Tab!]
+    getTabs(poeInfo: PoeInfo!): TabData
 }
 
 input PoeInfo {
     poeSessId: String!
     accountName: String!
     league: String!
+}
+
+type TabData {
+    numTabs: Int!
+    tabs: [Tab!]!
 }
 
 type Tab {
