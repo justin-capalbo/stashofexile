@@ -1,8 +1,8 @@
 import PoeColour from "./PoeColour";
 
 type PoeTab = {
-	n: string
-	i: number
+	n: string,
+	i: number,
 	type: string,
 	colour: PoeColour,
 };

@@ -1,11 +1,11 @@
+type PoeInfo = {
+	poeSessId: string,
+	accountName: string,
+	league: string,
+};
+
 type TabsArgs = {
-	input: {
-		creds: {
-			poeSessId: string;
-			accountName: string;
-			league: string;
-		},
-	},
+	poeInfo: PoeInfo,
 };
 
 export default TabsArgs;

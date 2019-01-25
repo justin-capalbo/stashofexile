@@ -1,4 +1,4 @@
-import getTabs from "./tabs";
+import getTabs from "./getTabs";
 import { TabsArgs, Tab } from "../models";
 
 const Query = {

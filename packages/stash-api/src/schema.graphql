@@ -1,13 +1,9 @@
 type Query {
     hello: String!
-    getTabs(input: GetTabsInput!): [Tab!]
+    getTabs(poeInfo: PoeInfo!): [Tab!]
 }
 
-input GetTabsInput {
-    creds: AccountInfo!
-}
-
-input AccountInfo {
+input PoeInfo {
     poeSessId: String!
     accountName: String!
     league: String!
