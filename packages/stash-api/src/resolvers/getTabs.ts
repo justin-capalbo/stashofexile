@@ -20,7 +20,7 @@ const getTabs = async (args: TabsArgs): Promise<TabData> => {
 		tabs: responseData.tabs.map((tab): Tab => ({
 			name: tab.n,
 			index: tab.i,
-			type: tab.type,
+			type: tab.type.replace("Stash", ""),
 			color: { ...tab.colour },
 		})),
 	};

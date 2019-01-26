@@ -1,18 +1,29 @@
 import styled from "@emotion/styled";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { tabCountQueryVariables, tabCountQuery_getTabs_tabs, tabCountQuery } from "./models/tabCountQuery";
+import {
+	tabCountQueryVariables,
+	tabCountQuery_getTabs_tabs,
+	tabCountQuery,
+	tabCountQuery_getTabs_tabs_color,
+} from "./models/tabCountQuery";
 
 const TabCardStyles = styled.div`
     padding-left: 30px;
 `;
 
-const TabEmphasis = styled.span`
-    font-weight: bold;
+const TabName = styled.span<tabCountQuery_getTabs_tabs_color>`
+	font-weight: bold;
+	background-color: rgb(${(props) => props.r} ${(props) => props.g} ${(props) => props.b});
+	border-radius: 8%;
+	border: 1px solid;
+	color: black;
+	text-align: center;
+	padding: 6px;
 `;
 
 const TabSection = styled.div`
-    padding: 15px;
+    margin: 15px;
 `;
 
 const MyButton = styled.button`
@@ -29,6 +40,11 @@ const TAB_COUNT_QUERY = gql`
 				index
 				name
 				type
+                color {
+                    r
+                    g
+                    b
+                }
 			}
 		}
 	}
@@ -44,11 +60,11 @@ const poeCreds: tabCountQueryVariables = {
 
 const TabCard = ({ tab }: { tab: tabCountQuery_getTabs_tabs }) => (
 	<p>
-		<TabEmphasis>{tab.name}</TabEmphasis>: {tab.type}
+		<TabName {...tab.color}>{tab.name}</TabName> {tab.type}
 	</p>
 );
 
-class TabCountQuery extends Query<tabCountQuery, tabCountQueryVariables> {}
+class TabCountQuery extends Query<tabCountQuery, tabCountQueryVariables> { }
 
 const Home = () => (
 	<div>
@@ -57,20 +73,20 @@ const Home = () => (
 			query={TAB_COUNT_QUERY}
 			variables={poeCreds}
 		>
-		{({data: { getTabs }, loading, error}) => {
-			if (loading) { return <p>Loading</p>; }
-			if (error) { return <p>Error</p>; }
+			{({ data: { getTabs }, loading, error }) => {
+				if (loading) { return <p>Loading</p>; }
+				if (error) { return <p>Error</p>; }
 
-			const { tabs, numTabs } = getTabs;
-			return (
-				<TabSection>
-					<p>{poeCreds.poeInfo.accountName} has {numTabs} stash tabs.</p>
-					<TabCardStyles>
-						{tabs.map((tab) => <TabCard key={tab.index} tab={tab} />)}
-					</TabCardStyles>
-				</TabSection>
-			);
-		}}
+				const { tabs, numTabs } = getTabs;
+				return (
+					<TabSection>
+						<p>{poeCreds.poeInfo.accountName} has {numTabs} stash tabs.</p>
+						<TabCardStyles>
+							{tabs.map((tab) => <TabCard key={tab.index} tab={tab} />)}
+						</TabCardStyles>
+					</TabSection>
+				);
+			}}
 		</TabCountQuery>
 	</div>
 );
