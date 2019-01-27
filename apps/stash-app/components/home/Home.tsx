@@ -14,22 +14,20 @@ const TabCardStyles = styled.div`
 
 const TabName = styled.span<tabCountQuery_getTabs_tabs_color>`
 	font-weight: bold;
-	background-color: rgb(${(props) => props.r} ${(props) => props.g} ${(props) => props.b});
-	border-radius: 8%;
-	border: 1px solid;
-	color: black;
+	border-radius: 12% 12% 2% 2%;
+	border: 1px solid black;
 	text-align: center;
-	padding: 6px;
+    padding: 7px;
+    margin-right: 1px;
+	background-color: rgb(${(props) => props.r} ${(props) => props.g} ${(props) => props.b});
+	color: ${(props) => {
+        const luma = (0.2126 * props.r + 0.7152 * props.g + 0.0722 * props.b);
+        return luma > 123.5 ? "black" : "gold";
+    }};
 `;
 
 const TabSection = styled.div`
     margin: 15px;
-`;
-
-const MyButton = styled.button`
-	border-radius: 5px;
-	background-color: #7fffd4;
-	padding: .5em 1em;
 `;
 
 const TAB_COUNT_QUERY = gql`
@@ -58,37 +56,32 @@ const poeCreds: tabCountQueryVariables = {
     },
 };
 
-const TabCard = ({ tab }: { tab: tabCountQuery_getTabs_tabs }) => (
-    <p>
-        <TabName {...tab.color}>{tab.name}</TabName> {tab.type}
-    </p>
+const TabHeader = ({ tab }: { tab: tabCountQuery_getTabs_tabs }) => (
+    <TabName {...tab.color}>{tab.name}</TabName>
 );
 
 class TabCountQuery extends Query<tabCountQuery, tabCountQueryVariables> { }
 
 const Home = () => (
-    <div>
-        <MyButton>Hello Next JS</MyButton>
-        <TabCountQuery
-            query={TAB_COUNT_QUERY}
-            variables={poeCreds}
-        >
-            {({ data: { getTabs }, loading, error }) => {
-                if (loading) { return <p>Loading</p>; }
-                if (error) { return <p>Error</p>; }
+    <TabCountQuery
+        query={TAB_COUNT_QUERY}
+        variables={poeCreds}
+    >
+        {({ data: { getTabs }, loading, error }) => {
+            if (loading) { return <p>Loading</p>; }
+            if (error) { return <p>Error</p>; }
 
-                const { tabs, numTabs } = getTabs;
-                return (
-                    <TabSection>
-                        <p>{poeCreds.poeInfo.accountName} has {numTabs} stash tabs.</p>
-                        <TabCardStyles>
-                            {tabs.map((tab) => <TabCard key={tab.index} tab={tab} />)}
-                        </TabCardStyles>
-                    </TabSection>
-                );
-            }}
-        </TabCountQuery>
-    </div>
+            const { tabs, numTabs } = getTabs;
+            return (
+                <TabSection>
+                    <p>{poeCreds.poeInfo.accountName} has {numTabs} stash tabs.</p>
+                    <TabCardStyles>
+                        {tabs.map((tab) => <TabHeader key={tab.index} tab={tab} />)}
+                    </TabCardStyles>
+                </TabSection>
+            );
+        }}
+    </TabCountQuery>
 );
 
 export default Home;
