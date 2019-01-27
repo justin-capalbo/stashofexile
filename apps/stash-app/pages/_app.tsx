@@ -8,7 +8,7 @@ import { withApollo } from "../lib";
 import { Footer, Header } from "../components";
 
 type Props = {
-	apollo: ApolloClient<any>;
+    apollo: ApolloClient<any>;
 };
 
 const ContainerStyles = styled.div`
@@ -22,32 +22,32 @@ const FlexContent = styled.div`
 `;
 
 class MyApp extends App<Props> {
-	public static async getInitialProps({ Component, ctx }: { Component: any, ctx: NextContext }) {
-		let pageProps = {};
+    public static async getInitialProps({ Component, ctx }: { Component: any, ctx: NextContext }) {
+        let pageProps = {};
 
-		if (Component.getInitialProps) {
-			pageProps = await Component.getInitialProps(ctx);
-		}
+        if (Component.getInitialProps) {
+            pageProps = await Component.getInitialProps(ctx);
+        }
 
-		return { pageProps };
-	}
+        return { pageProps };
+    }
 
-	public render() {
-		const { Component, apollo, pageProps } = this.props;
-		return (
-			<NextContainer>
-				<ApolloProvider client={apollo}>
-					<ContainerStyles>
-						<Header />
-						<FlexContent>
-							<Component {...pageProps} />
-						</FlexContent>
-						<Footer />
-					</ContainerStyles>
-				</ApolloProvider>
-			</NextContainer>
-		);
-	}
+    public render() {
+        const { Component, apollo, pageProps } = this.props;
+        return (
+            <NextContainer>
+                <ApolloProvider client={apollo}>
+                    <ContainerStyles>
+                        <Header />
+                        <FlexContent>
+                            <Component {...pageProps} />
+                        </FlexContent>
+                        <Footer />
+                    </ContainerStyles>
+                </ApolloProvider>
+            </NextContainer>
+        );
+    }
 }
 
 export default withApollo(MyApp);
