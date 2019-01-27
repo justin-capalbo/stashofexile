@@ -1,5 +1,5 @@
 import Query from "./Query";
 
 export {
-	Query,
+    Query,
 };

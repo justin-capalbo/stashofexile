@@ -1,11 +1,11 @@
 type PoeInfo = {
-	poeSessId: string,
-	accountName: string,
-	league: string,
+    poeSessId: string,
+    accountName: string,
+    league: string,
 };
 
 type TabsArgs = {
-	poeInfo: PoeInfo,
+    poeInfo: PoeInfo,
 };
 
 export default TabsArgs;
