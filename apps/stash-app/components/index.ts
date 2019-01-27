@@ -3,7 +3,7 @@ import Header from "./header";
 import Home from "./home";
 
 export {
-	Footer,
-	Header,
-	Home,
+    Footer,
+    Header,
+    Home,
 };

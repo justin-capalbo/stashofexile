@@ -4,8 +4,8 @@ import TabsArgs from "./TabsArgs";
 import TabData from "./TabData";
 
 export {
-	Color,
-	Tab,
-	TabsArgs,
-	TabData,
+    Color,
+    Tab,
+    TabsArgs,
+    TabData,
 };
