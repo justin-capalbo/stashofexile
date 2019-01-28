@@ -21,8 +21,14 @@ type Tab {
     color: Color!
 }
 
+type Item {
+    name: String!
+    category: String!
+    image: String!
+}
+
 type Color {
-    r: Int!,
-    g: Int!,
+    r: Int!
+    g: Int!
     b: Int!
 }
