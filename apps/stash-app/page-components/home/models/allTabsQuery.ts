@@ -21,10 +21,18 @@ export interface allTabsQuery_getTabs_tabs {
   color: allTabsQuery_getTabs_tabs_color;
 }
 
+export interface allTabsQuery_getTabs_items {
+  __typename: "Item";
+  baseName: string;
+  image: string;
+  stackSize: number | null;
+}
+
 export interface allTabsQuery_getTabs {
   __typename: "TabData";
   numTabs: number;
   tabs: allTabsQuery_getTabs_tabs[];
+  items: allTabsQuery_getTabs_items[] | null;
 }
 
 export interface allTabsQuery {
@@ -33,4 +41,5 @@ export interface allTabsQuery {
 
 export interface allTabsQueryVariables {
   poeInfo: PoeInfo;
+  tabIndex?: number | null;
 }

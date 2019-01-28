@@ -12,7 +12,17 @@
         "ordered-imports": [false],
         "one-variable-per-declaration": [false],
         "interface-over-type-literal": false,
-        "max-classes-per-file": false
+        "max-classes-per-file": false,
+        "trailing-comma": [ 
+            true,
+            {
+                "multiline": {
+                    "arrays": "always",
+                    "objects": "always",
+                    "functions": "never",
+                }
+            }
+        ]
     },
     "rulesDirectory": [],
     "linterOptions": { "exclude": ["**/node_modules/**"]}
