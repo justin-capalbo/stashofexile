@@ -1,7 +1,10 @@
 type PoeItem = {
+    typeLine: string,
     name: string,
-    category: string,
     icon: string,
+    category: string[],
+    stackSize?: number,
+    maxStackSize?: number,
 };
 
 export default PoeItem;

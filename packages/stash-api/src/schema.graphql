@@ -1,6 +1,6 @@
 type Query {
     hello: String!
-    getTabs(poeInfo: PoeInfo!): TabData
+    getTabs(poeInfo: PoeInfo!, tabIndex: Int): TabData
 }
 
 input PoeInfo {
@@ -12,6 +12,7 @@ input PoeInfo {
 type TabData {
     numTabs: Int!
     tabs: [Tab!]!
+    items: [Item!]
 }
 
 type Tab {
@@ -22,9 +23,12 @@ type Tab {
 }
 
 type Item {
-    name: String!
-    category: String!
+    baseName: String!
+    uniqueName: String!
     image: String!
+    stackSize: Int
+    maxStackSize: Int
+    category: String
 }
 
 type Color {

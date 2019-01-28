@@ -1,10 +1,12 @@
-import { TabsArgs, TabData, Tab } from "../models";
+import { TabsArgs, TabData, Tab, Item } from "../models";
 import axios, { AxiosRequestConfig } from "axios";
 import { PoeTabsResponse } from "poe-models";
 
-const getTabs = async ({ poeInfo }: TabsArgs): Promise<TabData> => {
+// Gettin pretty big...
+const getTabs = async ({ poeInfo, tabIndex }: TabsArgs): Promise<TabData> => {
     const { accountName, league, poeSessId } = poeInfo;
-    const url = `${process.env.STASH_API}?accountName=${accountName}&league=${league}&tabs=1`;
+    const includeItems = tabIndex !== undefined ? `&tabIndex=${tabIndex}` : "";
+    const url = `${process.env.STASH_API}?accountName=${accountName}&league=${league}&tabs=1${includeItems}`;
     const headers = {
         Referer: process.env.POE_URL,
         Cookie: `POESESSID=${poeSessId}`,
@@ -16,7 +18,7 @@ const getTabs = async ({ poeInfo }: TabsArgs): Promise<TabData> => {
     const response = await axios(request);
 
     if (response.status !== 200) {
-        throw new Error(`RIP. Couldn't get a valid response from the server.`);
+        throw new Error(`RIP. Couldn't get a valid response from the server. (${response.status})`);
     }
 
     if (!response.data) {
@@ -24,6 +26,21 @@ const getTabs = async ({ poeInfo }: TabsArgs): Promise<TabData> => {
     }
 
     const responseData: PoeTabsResponse = response.data;
+
+    let items: Item[];
+    if (responseData.items) {
+        items = responseData.items.map((item) => {
+            const mappedItem: Item = {
+                baseName: item.typeLine,
+                uniqueName: item.name,
+                image: item.icon,
+                category: item.category[0],
+                maxStackSize: item.maxStackSize,
+                stackSize: item.stackSize,
+            };
+            return mappedItem;
+        });
+    }
 
     return {
         numTabs: responseData.numTabs,
@@ -33,6 +50,7 @@ const getTabs = async ({ poeInfo }: TabsArgs): Promise<TabData> => {
             type: tab.type.replace("Stash", ""),
             color: { ...tab.colour },
         })),
+        items,
     };
 };
 

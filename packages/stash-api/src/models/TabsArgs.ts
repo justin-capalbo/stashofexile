@@ -6,6 +6,7 @@ type PoeInfo = {
 
 type TabsArgs = {
     poeInfo: PoeInfo,
+    tabIndex: number,
 };
 
 export default TabsArgs;
