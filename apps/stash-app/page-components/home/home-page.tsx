@@ -62,7 +62,7 @@ const TabHeader = ({ tab }: { tab: tabCountQuery_getTabs_tabs }) => (
 
 class TabCountQuery extends Query<tabCountQuery, tabCountQueryVariables> { }
 
-const Home = () => (
+const HomePage = () => (
     <TabCountQuery
         query={TAB_COUNT_QUERY}
         variables={poeCreds}
@@ -84,4 +84,4 @@ const Home = () => (
     </TabCountQuery>
 );
 
-export default Home;
+export default HomePage;

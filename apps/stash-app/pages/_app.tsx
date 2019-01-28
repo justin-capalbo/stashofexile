@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { ApolloProvider } from "react-apollo";
 import { ApolloClient } from "apollo-boost";
 import { withApollo } from "../lib";
-import { Footer, Header } from "../components";
+import { Footer, Header } from "../shared-components";
 
 type Props = {
     apollo: ApolloClient<any>;
