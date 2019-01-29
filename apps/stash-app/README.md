@@ -6,11 +6,12 @@ Dependencies should be installed from the workspace root, since this package sha
 
 ### Usage
 
-1. Start the nextJS server
+1. Edit HomePage.tsx with your POESESSID token.  Don't commit source code with a valid POESESSID!  The POESESSID in the source code currently is expired due to logout and will not work for API calls.
+2. Start the nextJS server
     - Together with GraphQL, from workspace root (Recommended): `yarn wsrun dev`
     - Just this project, from workspace root: `yarn wsrun -p stash-app -c dev`
     - Just this project, this directory: `yarn dev`
-2. Navigate to http://localhost:3000 in a browser window.
+3. Navigate to http://localhost:3000 in a browser window.
 
 ### Codegen
 
