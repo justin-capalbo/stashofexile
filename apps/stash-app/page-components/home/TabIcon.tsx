@@ -9,6 +9,7 @@ const TabName = styled.button<allTabsQuery_getTabs_tabs_color & { selected: bool
 	border: 1px solid black;
     text-align: center;
     padding: 7px;
+    cursor: pointer;
     margin-right: 1px;
     margin-top: 5px;
     background-color: ${({ r, g, b }) => `rgb(${r} ${g} ${b})`};
