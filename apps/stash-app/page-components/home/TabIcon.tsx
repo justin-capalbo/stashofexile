@@ -24,14 +24,14 @@ const TabName = styled.button<allTabsQuery_getTabs_tabs_color & { selected: bool
     }
 `;
 
-type TabIconProps = {
+type Props = {
     name: string,
     color: allTabsQuery_getTabs_tabs_color,
-    handleClick: () => void,
     selected: boolean,
+    handleClick: () => void,
 };
 
-const TabIcon = ({ color, name, handleClick, selected }: TabIconProps) => (
+const TabIcon: React.FunctionComponent<Props> = ({ color, name, selected, handleClick }) => (
     <TabName onClick={handleClick} selected={selected} {...color}>{name}</TabName>
 );
 

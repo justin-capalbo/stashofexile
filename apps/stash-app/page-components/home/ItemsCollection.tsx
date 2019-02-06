@@ -20,7 +20,7 @@ type Props ={
     items: allTabsQuery_getTabs_items[],
 }
 
-const ItemsCollection: React.SFC<Props> = ({ items }) => (
+const ItemsCollection: React.FunctionComponent<Props> = ({ items }) => (
     <ItemStyles>
     {items.map((item, index) => (
         <Item key={index}>
