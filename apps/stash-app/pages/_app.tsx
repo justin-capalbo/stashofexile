@@ -2,7 +2,7 @@ import App, { Container as NextContainer } from "next/app";
 import * as React from "react";
 import { NextContext } from "next";
 import styled from "@emotion/styled";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "react-apollo-hooks";
 import { ApolloClient } from "apollo-boost";
 import { withApollo } from "../lib";
 import { Footer, Header } from "../shared-components";

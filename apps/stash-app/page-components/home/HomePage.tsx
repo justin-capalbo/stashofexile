@@ -8,6 +8,7 @@ import {
     allTabsQueryVariables,
     allTabsQuery,
 } from "./models/allTabsQuery";
+import { useQuery } from "react-apollo-hooks";
 
 const TabSection = styled.div`
     margin: 15px;
@@ -46,41 +47,35 @@ const poeInfo = {
     league: "betrayal",
 };
 
-class AllTabsQuery extends Query<allTabsQuery, allTabsQueryVariables> { }
 const HomePage: React.FC = () => {
     const [selectedTab, setSelectedTab] = useState<number>(undefined);
-    return (
-        <AllTabsQuery
-            query={ALL_TABS_QUERY}
-            variables={{
-                tabIndex: selectedTab,
-                poeInfo,
-            }}
-        >
-            {({ data: { getTabs }, loading, error }) => {
-                if (loading) return <p>Loading stash...</p>;
-                if (error) return <p>Error loading stash: {error}</p>;
+    const { data: { getTabs }, loading, error } = useQuery<allTabsQuery, allTabsQueryVariables>(ALL_TABS_QUERY, { 
+        suspend: false,
+        variables: {
+            tabIndex: selectedTab,
+            poeInfo
+        },
+    });
 
-                const { tabs, numTabs, items } = getTabs;
-                return (
-                    <TabSection>
-                        <p>{poeInfo.accountName} has {numTabs} stash tabs.</p>
-                        <TabIconContainer>
-                            {tabs.map((tab) => <TabIcon
-                                key={tab.index}
-                                color={tab.color}
-                                name={tab.name}
-                                selected={tab.index === selectedTab}
-                                handleClick={() => setSelectedTab(tab.index)}
-                            />)}
-                        </TabIconContainer>
-                        {items &&
-                            <ItemsCollection items={items} />
-                        }
-                    </TabSection>
-                );
-            }}
-        </AllTabsQuery>
+    if (loading) return <p>Loading stash...</p>;
+    if (error) return <p>Error loading stash: {error.message}</p>;
+    const { tabs, numTabs, items } = getTabs;
+    return (
+        <TabSection>
+            <p>{poeInfo.accountName} has {numTabs} stash tabs.</p>
+            <TabIconContainer>
+                {tabs.map((tab) => <TabIcon
+                    key={tab.index}
+                    color={tab.color}
+                    name={tab.name}
+                    selected={tab.index === selectedTab}
+                    handleClick={() => setSelectedTab(tab.index)}
+                />)}
+            </TabIconContainer>
+            {items &&
+                <ItemsCollection items={items} />
+            }
+        </TabSection>
     );
 }
 
