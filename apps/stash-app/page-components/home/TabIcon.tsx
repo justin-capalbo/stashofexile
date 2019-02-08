@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "@emotion/styled";
 import {
     allTabsQuery_getTabs_tabs_color,
@@ -32,8 +33,8 @@ type Props = {
     handleClick: () => void,
 };
 
-const TabIcon: React.FunctionComponent<Props> = ({ color, name, selected, handleClick }) => (
+const TabIcon: React.FC<Props> = React.memo(({ color, name, selected, handleClick }) => (
     <TabName onClick={handleClick} selected={selected} {...color}>{name}</TabName>
-);
+));
 
 export default TabIcon;

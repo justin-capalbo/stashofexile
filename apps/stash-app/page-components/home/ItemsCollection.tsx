@@ -20,7 +20,7 @@ type Props = {
     items: allTabsQuery_getTabs_items[],
 };
 
-const ItemsCollection: React.FunctionComponent<Props> = ({ items }) => (
+const ItemsCollection: React.FC<Props> = React.memo(({ items }) => (
     <ItemStyles>
     {items.map((item, index) => (
         <Item key={index}>
@@ -29,6 +29,6 @@ const ItemsCollection: React.FunctionComponent<Props> = ({ items }) => (
         </Item>
     ))}
     </ItemStyles>
-);
+));
 
 export default ItemsCollection;
