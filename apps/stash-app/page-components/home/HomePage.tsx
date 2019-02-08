@@ -13,31 +13,31 @@ const HomePage: React.FC = () => {
     const [league, setLeague] = useState<string>("Betrayal");
 
     return (
-        <HomeContainer> 
+        <HomeContainer>
             <form>
-                <input 
-                    type="text" 
-                    onChange={e => setPoeSessId(e.target.value)} 
+                <input
+                    type="text"
+                    onChange={(e) => setPoeSessId(e.target.value)}
                     placeholder="POE Session Id"
                     required
                 />
-                <input 
-                    type="text" 
-                    defaultValue={accountName} 
-                    onChange={e => setAccountName(e.target.value)} 
-                    placeholder="Account Name" 
+                <input
+                    type="text"
+                    defaultValue={accountName}
+                    onChange={(e) => setAccountName(e.target.value)}
+                    placeholder="Account Name"
                     required
                 />
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     defaultValue={league}
-                    onChange={e => setLeague(e.target.value)} 
+                    onChange={(e) => setLeague(e.target.value)}
                     placeholder="League"
                 />
             </form>
             <TabSelector poeInfo={{ poeSessId, accountName, league }} />
         </HomeContainer>
     );
-}
+};
 
 export default HomePage;

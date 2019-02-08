@@ -16,9 +16,9 @@ const Item = styled.span`
     float: left;
 `;
 
-type Props ={
+type Props = {
     items: allTabsQuery_getTabs_items[],
-}
+};
 
 const ItemsCollection: React.FunctionComponent<Props> = ({ items }) => (
     <ItemStyles>

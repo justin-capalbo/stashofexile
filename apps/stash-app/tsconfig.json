@@ -4,6 +4,6 @@
     "outDir": "dist",
     "rootDir": ".",
     "jsx": "preserve",
-    "lib": ["dom"]
+    "lib": ["es6", "dom"]
   }
 }

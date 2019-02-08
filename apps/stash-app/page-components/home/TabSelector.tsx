@@ -47,11 +47,11 @@ type Props = {
 
 const TabSelector: React.FC<Props> = ({ poeInfo }) => {
     const [selectedTab, setSelectedTab] = useState<number>(undefined);
-    const { data: { getTabs }, loading, error } = useQuery<allTabsQuery, allTabsQueryVariables>(ALL_TABS_QUERY, { 
+    const { data: { getTabs }, loading, error } = useQuery<allTabsQuery, allTabsQueryVariables>(ALL_TABS_QUERY, {
         suspend: false,
         variables: {
             tabIndex: selectedTab,
-            poeInfo
+            poeInfo,
         },
     });
 
@@ -75,6 +75,6 @@ const TabSelector: React.FC<Props> = ({ poeInfo }) => {
             }
         </TabSection>
     );
-}
+};
 
 export default TabSelector;
