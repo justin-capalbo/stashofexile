@@ -9,7 +9,8 @@
                 "."
             ],
             "alias": {
-                "components": "./components"
+                "shared-components": "./shared-components",
+                "page-components": "./page-components"
             }
         }],
         "emotion"

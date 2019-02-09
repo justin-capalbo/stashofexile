@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import gql from "graphql-tag";
-import TabIcon from "./TabIcon";
+import { useQuery } from "react-apollo-hooks";
 import ItemsCollection from "./ItemsCollection";
+import TabsCollection from "./TabsCollection";
 import {
     allTabsQueryVariables,
     allTabsQuery,
 } from "./models/allTabsQuery";
-import { useQuery } from "react-apollo-hooks";
 import { PoeInfo } from "../../models/globalTypes";
 
-const TabSection = styled.div`
+const TabStyles = styled.div`
     margin: 15px;
     text-align: center;
-`;
-
-const TabIconContainer = styled.div`
-    padding: 10px 10px 0px 10px;
 `;
 
 const ALL_TABS_QUERY = gql`
@@ -59,21 +55,11 @@ const TabSelector: React.FC<Props> = ({ poeInfo }) => {
     if (error) return <p>Error loading stash: {error.message}</p>;
     const { tabs, numTabs, items } = getTabs;
     return (
-        <TabSection>
+        <TabStyles>
             <p>{poeInfo.accountName} has {numTabs} stash tabs.</p>
-            <TabIconContainer>
-                {tabs.map((tab) => <TabIcon
-                    key={tab.index}
-                    color={tab.color}
-                    name={tab.name}
-                    selected={tab.index === selectedTab}
-                    handleClick={() => setSelectedTab(tab.index)}
-                />)}
-            </TabIconContainer>
-            {items &&
-                <ItemsCollection items={items} />
-            }
-        </TabSection>
+            <TabsCollection tabs={tabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+            <ItemsCollection items={items} />
+        </TabStyles>
     );
 };
 
