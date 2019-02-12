@@ -4,11 +4,10 @@
 
 This project uses [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/).  Most commands can be run from the workspace root and the below examples are given assuming they are run from the workspace root.
 
-- To install [Yarn](https://yarnpkg.com/en/):
-    - `npm i -g yarn`
-- To install dependencies for all packages: 
+- [Install Yarn](https://yarnpkg.com/en/docs/install)
+- Install dependencies for all packages (from project root): 
     - `yarn`
-- To install dependencies for a specific package:
+- install dependencies for a specific package (from project root):
     - `yarn workspace <package-name> install`
     - e.g. `yarn workspace stash-api install`
 
@@ -28,4 +27,4 @@ This workspace leverages [wsrun](https://www.npmjs.com/package/wsrun) for ease o
 
 ### About
 
-- Stash of Exile is a full stack application for exploring [Path of Exile](www.pathofexile.com) character inventory stashes. 
+- Stash of Exile is a full stack application for exploring [Path of Exile](https://www.pathofexile.com) character inventory stashes. 
