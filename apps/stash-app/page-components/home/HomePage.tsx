@@ -10,7 +10,7 @@ const HomeContainer = styled.div`
 const HomePage: React.FC = () => {
     const [poeSessId, setPoeSessId] = useState<string>("");
     const [accountName, setAccountName] = useState<string>("Rejechted");
-    const [league, setLeague] = useState<string>("Betrayal");
+    const [league, setLeague] = useState<string>("Synthesis");
 
     return (
         <HomeContainer>
