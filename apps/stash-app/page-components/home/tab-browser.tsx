@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
-import ItemsCollection from "./ItemsCollection";
-import TabsCollection from "./TabsCollection";
+import ItemsCollection from "./items-collection";
+import TabPicker from "./tab-picker";
 import {
     allTabsQueryVariables,
     allTabsQuery,
@@ -15,38 +15,23 @@ const TabStyles = styled.div`
     text-align: center;
 `;
 
-const ALL_TABS_QUERY = gql`
-	query allTabsQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
-		getTabs(poeInfo: $poeInfo, tabIndex: $tabIndex) {
-			numTabs
-			tabs {
-				index
-				name
-                color {
-                    r
-                    g
-                    b
-                }
-			}
-            items {
-                baseName
-                image
-                stackSize
-            }
-		}
-	}
+const ACCOUNT_INFO_QUERY = gql`
+    query accountInfoQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
+        getTabs(poeInfo: $poeInfo, tabIndex: $tabIndex) {
+            numTabs
+        }
+    }
 `;
 
 type Props = {
     poeInfo: PoeInfo,
 };
 
-const TabSelector: React.FC<Props> = ({ poeInfo }) => {
+const TabBrowser: React.FC<Props> = ({ poeInfo }) => {
     const [selectedTab, setSelectedTab] = useState<number>(undefined);
-    const { data: { getTabs }, loading, error } = useQuery<allTabsQuery, allTabsQueryVariables>(ALL_TABS_QUERY, {
+    const { data: { getTabs }, loading, error } = useQuery<allTabsQuery, allTabsQueryVariables>(ACCOUNT_INFO_QUERY, {
         suspend: false,
         variables: {
-            tabIndex: selectedTab,
             poeInfo,
         },
     });
@@ -57,10 +42,10 @@ const TabSelector: React.FC<Props> = ({ poeInfo }) => {
     return (
         <TabStyles>
             <p>{poeInfo.accountName} has {numTabs} stash tabs.</p>
-            <TabsCollection tabs={tabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+            <TabPicker tabs={tabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
             <ItemsCollection items={items} />
         </TabStyles>
     );
 };
 
-export default TabSelector;
+export default TabBrowser;

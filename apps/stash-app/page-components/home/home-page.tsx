@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import TabSelector from "./TabSelector";
+import TabBrowser from "./tab-browser";
 
 const HomeContainer = styled.div`
     margin-top: 15px;
@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
                     placeholder="League"
                 />
             </form>
-            <TabSelector poeInfo={{ poeSessId, accountName, league }} />
+            <TabBrowser poeInfo={{ poeSessId, accountName, league }} />
         </HomeContainer>
     );
 };

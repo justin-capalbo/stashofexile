@@ -4,7 +4,8 @@ import {
     allTabsQuery_getTabs_tabs_color,
 } from "./models/allTabsQuery";
 
-const TabName = styled.button<allTabsQuery_getTabs_tabs_color & { selected: boolean }>`
+type TabNameProps = allTabsQuery_getTabs_tabs_color & { selected: boolean };
+const TabName = styled.button<TabNameProps>`
     font-weight: bold;
 	border-radius: 12% 12% 2% 2%;
 	border: 1px solid black;
