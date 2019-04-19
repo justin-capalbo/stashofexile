@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
     return (
         <HomeContainer>
             <AuthForm onSubmit={handleSubmit}/>
-            <TabBrowser poeInfo={poeCreds} />
+            { poeCreds && <TabBrowser poeInfo={poeCreds} /> }
         </HomeContainer>
     );
 };
