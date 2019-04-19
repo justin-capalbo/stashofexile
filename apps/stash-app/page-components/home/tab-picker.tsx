@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
 import TabIcon from "./tab-icon";
-import { allTabsQuery_getTabs_tabs } from "./models/allTabsQuery";
+import { AllItemsQuery_getTabs_tabs } from "../..//models/AllItemsQuery";
 
 const TabIcons = styled.div`
     padding: 10px 10px 0px 10px;
 `;
 
 type Props = {
-    tabs: allTabsQuery_getTabs_tabs[],
+    tabs: AllItemsQuery_getTabs_tabs[],
     selectedTab: number,
     setSelectedTab: (tabIndex: number) => void,
 };

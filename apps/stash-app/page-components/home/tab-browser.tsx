@@ -5,7 +5,7 @@ import { useQuery } from "react-apollo-hooks";
 import ItemsCollection from "./items-collection";
 import TabPicker from "./tab-picker";
 import { PoeInfo } from "../../models/globalTypes";
-import { AccountInfoQuery, AccountInfoQueryVariables } from "../../models/accountInfoQuery";
+import { AllItemsQuery, AllItemsQueryVariables } from "../../models/AllItemsQuery";
 
 const TabStyles = styled.div`
     margin: 15px;
@@ -13,9 +13,23 @@ const TabStyles = styled.div`
 `;
 
 const ACCOUNT_INFO_QUERY = gql`
-    query AccountInfoQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
+    query AllItemsQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
         getTabs(poeInfo: $poeInfo, tabIndex: $tabIndex) {
             numTabs
+            tabs {
+                name
+                index
+                color {
+                    r
+                    g
+                    b
+                }
+            }
+            items {
+                image
+                baseName
+                stackSize
+            }
         }
     }
 `;
@@ -27,11 +41,12 @@ type Props = {
 const TabBrowser: React.FC<Props> = ({ poeInfo }) => {
     const [selectedTab, setSelectedTab] = useState<number>(undefined);
     const { data: { getTabs }, loading, error } =
-        useQuery<AccountInfoQuery, AccountInfoQueryVariables>(
+        useQuery<AllItemsQuery, AllItemsQueryVariables>(
             ACCOUNT_INFO_QUERY, {
             suspend: false,
             variables: {
                 poeInfo,
+                tabIndex: selectedTab,
             },
         });
 

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { allTabsQuery_getTabs_items } from "./models/allTabsQuery";
+import { AllItemsQuery_getTabs_items } from "../../models/AllItemsQuery";
 
 const ItemStyles = styled.div`
     background-color: #455;
@@ -17,7 +17,7 @@ const Item = styled.span`
 `;
 
 type Props = {
-    items: allTabsQuery_getTabs_items[],
+    items: AllItemsQuery_getTabs_items[],
 };
 
 const ItemsCollection: React.FC<Props> = React.memo(({ items }) => (
