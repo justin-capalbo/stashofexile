@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import {
-    allTabsQuery_getTabs_tabs_color,
-} from "./models/allTabsQuery";
+import { AllItemsQuery_getTabs_tabs_color } from "../../models/AllItemsQuery";
 
-type TabNameProps = allTabsQuery_getTabs_tabs_color & { selected: boolean };
+type TabNameProps = AllItemsQuery_getTabs_tabs_color & { selected: boolean };
 const TabName = styled.button<TabNameProps>`
     font-weight: bold;
 	border-radius: 12% 12% 2% 2%;
@@ -24,12 +22,11 @@ const TabName = styled.button<TabNameProps>`
     }
     ${(props) => !props.selected &&
         "opacity: 0.65;"
-    }
-`;
+    } `;
 
 type Props = {
     name: string,
-    color: allTabsQuery_getTabs_tabs_color,
+    color: AllItemsQuery_getTabs_tabs_color,
     selected: boolean,
     handleClick: () => void,
 };

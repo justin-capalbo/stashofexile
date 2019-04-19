@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "get-schema": "apollo service:download --endpoint=http://localhost:4000 ./models/schema/schema.json",
-    "make-types": "apollo client:codegen --target=typescript --localSchemaFile=./models/schema/schema.json --includes=./**/*.tsx ./models",
+    "get-schema": "apollo schema:download --config=apollo.service.config.js ./models/schema.json",
+    "make-types": "apollo client:codegen ./models --config=apollo.client.config.js --target=typescript --outputFlat",
     "codegen": "yarn get-schema && yarn make-types",
     "dev": "next ."
   },

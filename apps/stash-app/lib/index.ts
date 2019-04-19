@@ -1,4 +1,4 @@
-import withApollo from "./withApollo";
+import withApollo from "./with-apollo";
 
 export {
     withApollo,
