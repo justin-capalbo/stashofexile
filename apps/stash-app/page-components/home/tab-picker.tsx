@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import TabIcon from "./tab-icon";
+import { TabIcon } from "./tab-icon";
 import { AllItemsQuery_getTabs_tabs } from "../..//models/AllItemsQuery";
 
 const TabIcons = styled.div`
@@ -13,7 +13,7 @@ type Props = {
     setSelectedTab: (tabIndex: number) => void,
 };
 
-const TabPicker: React.FC<Props> = React.memo(({ tabs, selectedTab, setSelectedTab }) => (
+export const TabPicker: React.FC<Props> = React.memo(({ tabs, selectedTab, setSelectedTab }) => (
     <TabIcons>
         {tabs.map((tab) => <TabIcon
             key={tab.index}
@@ -24,5 +24,3 @@ const TabPicker: React.FC<Props> = React.memo(({ tabs, selectedTab, setSelectedT
         />)}
     </TabIcons>
 ));
-
-export default TabPicker;

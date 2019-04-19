@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import ItemsCollection from "./items-collection";
-import TabPicker from "./tab-picker";
+import { TabPicker } from "./tab-picker";
 import { PoeInfo } from "../../models/globalTypes";
 import { AllItemsQuery, AllItemsQueryVariables } from "../../models/AllItemsQuery";
 
@@ -38,7 +38,7 @@ type Props = {
     poeInfo: PoeInfo,
 };
 
-const TabBrowser: React.FC<Props> = ({ poeInfo }) => {
+export const TabBrowser: React.FC<Props> = ({ poeInfo }) => {
     const [selectedTab, setSelectedTab] = useState<number>(undefined);
     const { data: { getTabs }, loading, error } =
         useQuery<AllItemsQuery, AllItemsQueryVariables>(
@@ -61,5 +61,3 @@ const TabBrowser: React.FC<Props> = ({ poeInfo }) => {
         </TabStyles>
     );
 };
-
-export default TabBrowser;
