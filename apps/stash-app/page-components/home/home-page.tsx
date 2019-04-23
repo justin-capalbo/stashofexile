@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { TabBrowser } from "./tab-browser";
 import { PoeInfo } from "../../models/globalTypes";
 import { AuthForm } from "./auth-form";
+import { AuthContext } from "../../context";
 
 const HomeContainer = styled.div`
     margin-top: 15px;
@@ -10,16 +11,16 @@ const HomeContainer = styled.div`
 `;
 
 const HomePage: React.FC = () => {
-    const [poeCreds, setPoeCreds] = useState<PoeInfo>(null);
+    const { loggedIn, setLoggedIn } = useContext(AuthContext);
 
     const handleSubmit = (values: PoeInfo) => {
-        setPoeCreds(values);
+        setLoggedIn(values);
     };
 
     return (
         <HomeContainer>
             <AuthForm onSubmit={handleSubmit}/>
-            { poeCreds && <TabBrowser poeInfo={poeCreds} /> }
+            {loggedIn && <TabBrowser />}
         </HomeContainer>
     );
 };

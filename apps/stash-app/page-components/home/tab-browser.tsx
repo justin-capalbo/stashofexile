@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
@@ -6,6 +6,7 @@ import ItemsCollection from "./items-collection";
 import { TabPicker } from "./tab-picker";
 import { PoeInfo } from "../../models/globalTypes";
 import { AllItemsQuery, AllItemsQueryVariables } from "../../models/AllItemsQuery";
+import { AuthContext } from "../../context";
 
 const TabStyles = styled.div`
     margin: 15px;
@@ -34,18 +35,16 @@ const ACCOUNT_INFO_QUERY = gql`
     }
 `;
 
-type Props = {
-    poeInfo: PoeInfo,
-};
-
-export const TabBrowser: React.FC<Props> = ({ poeInfo }) => {
+export const TabBrowser: React.FC = () => {
     const [selectedTab, setSelectedTab] = useState<number>(undefined);
+    const { poeCreds } = useContext(AuthContext);
+
     const { data: { getTabs }, loading, error } =
         useQuery<AllItemsQuery, AllItemsQueryVariables>(
             ACCOUNT_INFO_QUERY, {
             suspend: false,
             variables: {
-                poeInfo,
+                poeInfo: poeCreds,
                 tabIndex: selectedTab,
             },
         });
@@ -55,7 +54,7 @@ export const TabBrowser: React.FC<Props> = ({ poeInfo }) => {
     const { tabs, numTabs, items } = getTabs;
     return (
         <TabStyles>
-            <p>{poeInfo.accountName} has {numTabs} stash tabs.</p>
+            <p>{poeCreds.accountName} has {numTabs} stash tabs.</p>
             <TabPicker tabs={tabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
             <ItemsCollection items={items} />
         </TabStyles>
