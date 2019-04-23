@@ -4,28 +4,18 @@ import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import ItemsCollection from "./items-collection";
 import { TabPicker } from "./tab-picker";
-import { PoeInfo } from "../../models/globalTypes";
-import { AllItemsQuery, AllItemsQueryVariables } from "../../models/AllItemsQuery";
 import { AuthContext } from "../../context";
+import { AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
+import { SingleTabItemsQuery, SingleTabItemsQueryVariables } from "../../models/SingleTabItemsQuery";
 
 const TabStyles = styled.div`
     margin: 15px;
     text-align: center;
 `;
 
-const ACCOUNT_INFO_QUERY = gql`
-    query AllItemsQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
+const SINGLE_TAB_ITEMS_QUERY = gql`
+    query SingleTabItemsQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
         getTabs(poeInfo: $poeInfo, tabIndex: $tabIndex) {
-            numTabs
-            tabs {
-                name
-                index
-                color {
-                    r
-                    g
-                    b
-                }
-            }
             items {
                 image
                 baseName
@@ -35,13 +25,17 @@ const ACCOUNT_INFO_QUERY = gql`
     }
 `;
 
-export const TabBrowser: React.FC = () => {
+type Props = {
+    tabs: AccountInfoQuery_getTabs_tabs[];
+};
+
+export const TabBrowser: React.FC<Props> = ({ tabs }) => {
     const [selectedTab, setSelectedTab] = useState<number>(undefined);
     const { poeCreds } = useContext(AuthContext);
 
     const { data: { getTabs }, loading, error } =
-        useQuery<AllItemsQuery, AllItemsQueryVariables>(
-            ACCOUNT_INFO_QUERY, {
+        useQuery<SingleTabItemsQuery, SingleTabItemsQueryVariables>(
+            SINGLE_TAB_ITEMS_QUERY, {
             suspend: false,
             variables: {
                 poeInfo: poeCreds,
@@ -49,12 +43,10 @@ export const TabBrowser: React.FC = () => {
             },
         });
 
-    if (loading) return <p>Loading stash...</p>;
-    if (error) return <p>Error loading stash: {error.message}</p>;
-    const { tabs, numTabs, items } = getTabs;
+    const { items } = getTabs;
     return (
         <TabStyles>
-            <p>{poeCreds.accountName} has {numTabs} stash tabs.</p>
+            <p>{poeCreds.accountName} has {tabs.length} stash tabs.</p>
             <TabPicker tabs={tabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
             <ItemsCollection items={items} />
         </TabStyles>
