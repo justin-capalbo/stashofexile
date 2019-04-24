@@ -6,7 +6,7 @@ import { ApolloProvider } from "react-apollo-hooks";
 import { ApolloClient } from "apollo-boost";
 import { withApollo } from "../lib";
 import { Footer, Header } from "../shared-components";
-import { AuthProvider } from "../context";
+import { AccountProvider } from "../context";
 
 type Props = {
     apollo: ApolloClient<any>;
@@ -38,7 +38,7 @@ class MyApp extends App<Props> {
         return (
             <NextContainer>
                 <ApolloProvider client={apollo}>
-                    <AuthProvider>
+                    <AccountProvider>
                         <ContainerStyles>
                             <Header />
                             <FlexContent>
@@ -46,7 +46,7 @@ class MyApp extends App<Props> {
                             </FlexContent>
                             <Footer />
                         </ContainerStyles>
-                    </AuthProvider>
+                    </AccountProvider>
                 </ApolloProvider>
             </NextContainer>
         );

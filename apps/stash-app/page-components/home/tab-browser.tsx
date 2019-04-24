@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import ItemsCollection from "./items-collection";
 import { TabPicker } from "./tab-picker";
-import { AuthContext } from "../../context";
+import { AccountContext } from "../../context";
 import { AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
 import { SingleTabItemsQuery, SingleTabItemsQueryVariables } from "../../models/SingleTabItemsQuery";
 
@@ -30,8 +30,8 @@ type Props = {
 };
 
 export const TabBrowser: React.FC<Props> = ({ tabs }) => {
-    const [selectedTab, setSelectedTab] = useState<number>(undefined);
-    const { poeCreds } = useContext(AuthContext);
+    const [selectedTab, setSelectedTab] = useState<number>(0);
+    const { poeCreds } = useContext(AccountContext);
 
     const { data: { getTabs }, loading, error } =
         useQuery<SingleTabItemsQuery, SingleTabItemsQueryVariables>(
@@ -43,12 +43,14 @@ export const TabBrowser: React.FC<Props> = ({ tabs }) => {
             },
         });
 
-    const { items } = getTabs;
     return (
         <TabStyles>
-            <p>{poeCreds.accountName} has {tabs.length} stash tabs.</p>
             <TabPicker tabs={tabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-            <ItemsCollection items={items} />
+            {loading
+                ? <p>Loading items...</p>
+                : error ? <p>Error loading stash: {error.message}</p>
+                : getTabs && <ItemsCollection items={getTabs.items} />
+            }
         </TabStyles>
     );
 };

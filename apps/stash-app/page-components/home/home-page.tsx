@@ -4,13 +4,13 @@ import gql from "graphql-tag";
 import { TabBrowser } from "./tab-browser";
 import { PoeInfo } from "../../models/globalTypes";
 import { AuthForm } from "./auth-form";
-import { AuthContext } from "../../context";
+import { AccountContext } from "../../context";
 import { useQuery } from "react-apollo-hooks";
-import { AccountInfoQuery, AccountInfoQueryVariables } from "../../models/AccountInfoQuery";
+import { AccountInfoQuery, AccountInfoQueryVariables, AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
 
 const ACCOUNT_INFO_QUERY = gql`
-    query AccountInfoQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
-        getTabs(poeInfo: $poeInfo, tabIndex: $tabIndex) {
+    query AccountInfoQuery($poeInfo: PoeInfo!) {
+        getTabs(poeInfo: $poeInfo) {
             tabs {
                 name
                 index
@@ -30,26 +30,21 @@ const HomeContainer = styled.div`
 `;
 
 const HomePage: React.FC = () => {
-    const { setLoggedIn, poeCreds } = useContext(AuthContext);
-    const { data: { getTabs }, loading, error } =
-        useQuery<AccountInfoQuery, AccountInfoQueryVariables>(
-            ACCOUNT_INFO_QUERY, {
-            suspend: false,
-            variables: {
-                poeInfo: poeCreds,
-            },
-        });
+    const { setLoggedIn, poeCreds, tabs } = useContext(AccountContext);
 
-    const handleSubmit = (values: PoeInfo) => {
-        setLoggedIn(values);
+    const handleSubmit = (values: PoeInfo, userTabs: AccountInfoQuery_getTabs_tabs[]) => {
+        setLoggedIn(values, userTabs);
     };
 
     return (
         <HomeContainer>
             <AuthForm onSubmit={handleSubmit}/>
-            {loading && <p>Loading...</p>}
-            {error && <p>RIP. Failed to find stash. Please try again!</p>}
-            {getTabs && getTabs.tabs && <TabBrowser tabs={getTabs.tabs} />}
+            {tabs && (
+                <>
+                    <p>{poeCreds.accountName} has {tabs.length} stash tabs.</p>
+                    <TabBrowser tabs={tabs} />
+                </>
+            )}
         </HomeContainer>
     );
 };

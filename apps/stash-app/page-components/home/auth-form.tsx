@@ -1,29 +1,62 @@
 import React, { useState } from "react";
-import { PoeInfo } from "../../models/globalTypes";
 import styled from "@emotion/styled";
+import { useApolloClient } from "react-apollo-hooks";
+import gql from "graphql-tag";
+import { PoeInfo } from "../../models/globalTypes";
+import {
+    AccountInfoQueryVariables,
+    AccountInfoQuery,
+    AccountInfoQuery_getTabs_tabs
+} from "../../models/AccountInfoQuery";
+
+const ACCOUNT_INFO_QUERY = gql`
+    query AccountInfoQuery($poeInfo: PoeInfo!) {
+        getTabs(poeInfo: $poeInfo) {
+            tabs {
+                name
+                index
+                color {
+                    r
+                    g
+                    b
+                }
+            }
+        }
+    }
+`;
 
 const SubmitButton = styled.button`
     margin-left: 4px;
 `;
 
 type AuthFormProps = {
-    onSubmit: (values: PoeInfo) => void;
+    onSubmit: (values: PoeInfo, tabs: AccountInfoQuery_getTabs_tabs[]) => void;
 };
 
 export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit }) => {
+    const client = useApolloClient();
     const [poeSessId, setPoeSessId] = useState<string>("");
     const [accountName, setAccountName] = useState<string>("Rejechted");
     const [league, setLeague] = useState<string>("Synthesis");
 
     return (
-        <form onSubmit={(e) => {
+        <form onSubmit={async (e) => {
             e.preventDefault();
             if (onSubmit) {
-                onSubmit({
-                    poeSessId,
-                    accountName,
-                    league,
+                const res = await client.query<AccountInfoQuery, AccountInfoQueryVariables>({
+                    query: ACCOUNT_INFO_QUERY,
+                    variables: {
+                        poeInfo: { poeSessId, accountName, league },
+                    },
                 });
+
+                if (res.data && res.data.getTabs && res.data.getTabs.tabs) {
+                    onSubmit({
+                        poeSessId,
+                        accountName,
+                        league,
+                    }, res.data.getTabs.tabs);
+                }
             }
         }}>
             <input
