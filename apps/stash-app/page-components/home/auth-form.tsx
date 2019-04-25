@@ -2,11 +2,9 @@ import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
 import { useApolloClient } from "react-apollo-hooks";
 import gql from "graphql-tag";
-import { PoeInfo } from "../../models/globalTypes";
 import {
     AccountInfoQueryVariables,
     AccountInfoQuery,
-    AccountInfoQuery_getTabs_tabs
 } from "../../models/AccountInfoQuery";
 import { AccountContext } from "../../context";
 
