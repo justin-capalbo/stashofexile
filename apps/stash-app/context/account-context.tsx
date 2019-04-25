@@ -1,23 +1,18 @@
 import React from "react";
 import { AccountInfoQuery_getTabs_tabs } from "../models/AccountInfoQuery";
-
-type PoeCreds = {
-    poeSessId: string;
-    accountName: string;
-    league: string;
-};
+import { PoeInfo } from "../models/globalTypes";
 
 type AccountState = {
     loggedIn: boolean;
-    validCredentials: PoeCreds | null;
+    validCredentials: PoeInfo | null;
     tabs: AccountInfoQuery_getTabs_tabs[] | null;
 };
 
 type AccountContextProps = {
-    poeCreds: PoeCreds;
+    poeCreds: PoeInfo;
     tabs: AccountInfoQuery_getTabs_tabs[];
     loggedIn: boolean;
-    setLoggedIn: (creds: PoeCreds, tabs: AccountInfoQuery_getTabs_tabs[]) => void;
+    setLoggedIn: (creds: PoeInfo, tabs: AccountInfoQuery_getTabs_tabs[]) => void;
 };
 
 export const AccountContext = React.createContext<AccountContextProps>(null!);
@@ -33,7 +28,7 @@ export class AccountProvider extends React.Component<{}, AccountState> {
         this.setLoggedIn = this.setLoggedIn.bind(this);
     }
 
-    public setLoggedIn(creds: PoeCreds, tabs: AccountInfoQuery_getTabs_tabs[]) {
+    public setLoggedIn(creds: PoeInfo, tabs: AccountInfoQuery_getTabs_tabs[]) {
         this.setState({
             loggedIn: true,
             validCredentials: { ...creds },
