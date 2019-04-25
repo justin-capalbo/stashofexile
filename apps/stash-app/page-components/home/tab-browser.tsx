@@ -26,10 +26,10 @@ const SINGLE_TAB_ITEMS_QUERY = gql`
 `;
 
 type Props = {
-    tabs: AccountInfoQuery_getTabs_tabs[];
+    tabData: AccountInfoQuery_getTabs_tabs[];
 };
 
-export const TabBrowser: React.FC<Props> = ({ tabs }) => {
+export const TabBrowser: React.FC<Props> = ({ tabData }) => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
     const { poeCreds } = useContext(AccountContext);
 
@@ -43,14 +43,15 @@ export const TabBrowser: React.FC<Props> = ({ tabs }) => {
             },
         });
 
+    const itemsCollection =
+        loading ? <p>Loading items...</p>
+        : error ? <p>Error loading stash: {error.message}</p>
+        : getTabs && <ItemsCollection items={getTabs.items} />;
+
     return (
         <TabStyles>
-            <TabPicker tabs={tabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-            {loading
-                ? <p>Loading items...</p>
-                : error ? <p>Error loading stash: {error.message}</p>
-                : getTabs && <ItemsCollection items={getTabs.items} />
-            }
+            <TabPicker tabs={tabData} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+            {itemsCollection}
         </TabStyles>
     );
 };

@@ -22,14 +22,14 @@ type Props = {
 
 const ItemsCollection: React.FC<Props> = React.memo(({ items }) => (
     <ItemStyles>
-    {items &&
-        items.map((item, index) => (
-            <Item key={index}>
-                <img src={item.image} />
-                {item.baseName} {item.stackSize && "x"}{item.stackSize}
-            </Item>
-        ))
-    }
+        {items &&
+            items.map((item, index) => (
+                <Item key={index}>
+                    <img src={item.image} />
+                    {item.baseName} {item.stackSize && "x"}{item.stackSize}
+                </Item>
+            ))
+        }
     </ItemStyles>
 ));
 

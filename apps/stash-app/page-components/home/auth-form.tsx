@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
 import { useApolloClient } from "react-apollo-hooks";
 import gql from "graphql-tag";
@@ -8,6 +8,7 @@ import {
     AccountInfoQuery,
     AccountInfoQuery_getTabs_tabs
 } from "../../models/AccountInfoQuery";
+import { AccountContext } from "../../context";
 
 const ACCOUNT_INFO_QUERY = gql`
     query AccountInfoQuery($poeInfo: PoeInfo!) {
@@ -29,12 +30,9 @@ const SubmitButton = styled.button`
     margin-left: 4px;
 `;
 
-type AuthFormProps = {
-    onSubmit: (values: PoeInfo, tabs: AccountInfoQuery_getTabs_tabs[]) => void;
-};
-
-export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit }) => {
+export const AuthForm: React.FC = () => {
     const client = useApolloClient();
+    const { setLoggedIn } = useContext(AccountContext);
     const [poeSessId, setPoeSessId] = useState<string>("");
     const [accountName, setAccountName] = useState<string>("Rejechted");
     const [league, setLeague] = useState<string>("Synthesis");
@@ -42,21 +40,20 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit }) => {
     return (
         <form onSubmit={async (e) => {
             e.preventDefault();
-            if (onSubmit) {
-                const res = await client.query<AccountInfoQuery, AccountInfoQueryVariables>({
-                    query: ACCOUNT_INFO_QUERY,
-                    variables: {
-                        poeInfo: { poeSessId, accountName, league },
-                    },
-                });
 
-                if (res.data && res.data.getTabs && res.data.getTabs.tabs) {
-                    onSubmit({
-                        poeSessId,
-                        accountName,
-                        league,
-                    }, res.data.getTabs.tabs);
-                }
+            const res = await client.query<AccountInfoQuery, AccountInfoQueryVariables>({
+                query: ACCOUNT_INFO_QUERY,
+                variables: {
+                    poeInfo: { poeSessId, accountName, league },
+                },
+            });
+
+            if (res.data && res.data.getTabs && res.data.getTabs.tabs) {
+                setLoggedIn({
+                    poeSessId,
+                    accountName,
+                    league,
+                }, res.data.getTabs.tabs);
             }
         }}>
             <input

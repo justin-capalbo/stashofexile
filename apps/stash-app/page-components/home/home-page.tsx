@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import gql from "graphql-tag";
 import { TabBrowser } from "./tab-browser";
 import { PoeInfo } from "../../models/globalTypes";
-import { AuthForm } from "./auth-form";
+import { AuthForm as AccountForm } from "./auth-form";
 import { AccountContext } from "../../context";
 import { useQuery } from "react-apollo-hooks";
 import { AccountInfoQuery, AccountInfoQueryVariables, AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
@@ -30,19 +30,14 @@ const HomeContainer = styled.div`
 `;
 
 const HomePage: React.FC = () => {
-    const { setLoggedIn, poeCreds, tabs } = useContext(AccountContext);
-
-    const handleSubmit = (values: PoeInfo, userTabs: AccountInfoQuery_getTabs_tabs[]) => {
-        setLoggedIn(values, userTabs);
-    };
-
+    const { loggedIn, poeCreds, tabs } = useContext(AccountContext);
     return (
         <HomeContainer>
-            <AuthForm onSubmit={handleSubmit}/>
-            {tabs && (
+            <AccountForm />
+            {loggedIn && (
                 <>
                     <p>{poeCreds.accountName} has {tabs.length} stash tabs.</p>
-                    <TabBrowser tabs={tabs} />
+                    <TabBrowser tabData={tabs} />
                 </>
             )}
         </HomeContainer>
