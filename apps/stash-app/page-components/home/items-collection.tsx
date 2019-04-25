@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { AllItemsQuery_getTabs_items } from "../../models/AllItemsQuery";
+import { SingleTabItemsQuery_getTabs_items } from "../../models/SingleTabItemsQuery";
 
 const ItemStyles = styled.div`
     background-color: #455;
@@ -17,19 +17,19 @@ const Item = styled.span`
 `;
 
 type Props = {
-    items: AllItemsQuery_getTabs_items[],
+    items: SingleTabItemsQuery_getTabs_items[],
 };
 
 const ItemsCollection: React.FC<Props> = React.memo(({ items }) => (
     <ItemStyles>
-    {items &&
-        items.map((item, index) => (
-            <Item key={index}>
-                <img src={item.image} />
-                {item.baseName} {item.stackSize && "x"}{item.stackSize}
-            </Item>
-        ))
-    }
+        {items &&
+            items.map((item, index) => (
+                <Item key={index}>
+                    <img src={item.image} />
+                    {item.baseName} {item.stackSize && "x"}{item.stackSize}
+                </Item>
+            ))
+        }
     </ItemStyles>
 ));
 

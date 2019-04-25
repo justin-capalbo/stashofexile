@@ -1,6 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
-import TabBrowser from "./tab-browser";
+import gql from "graphql-tag";
+import { TabBrowser } from "./tab-browser";
+import { PoeInfo } from "../../models/globalTypes";
+import { AuthForm as AccountForm } from "./auth-form";
+import { AccountContext } from "../../context";
+import { useQuery } from "react-apollo-hooks";
+import { AccountInfoQuery, AccountInfoQueryVariables, AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
+
+const ACCOUNT_INFO_QUERY = gql`
+    query AccountInfoQuery($poeInfo: PoeInfo!) {
+        getTabs(poeInfo: $poeInfo) {
+            tabs {
+                name
+                index
+                color {
+                    r
+                    g
+                    b
+                }
+            }
+        }
+    }
+`;
 
 const HomeContainer = styled.div`
     margin-top: 15px;
@@ -8,34 +30,16 @@ const HomeContainer = styled.div`
 `;
 
 const HomePage: React.FC = () => {
-    const [poeSessId, setPoeSessId] = useState<string>("");
-    const [accountName, setAccountName] = useState<string>("Rejechted");
-    const [league, setLeague] = useState<string>("Synthesis");
-
+    const { loggedIn, poeCreds, tabs } = useContext(AccountContext);
     return (
         <HomeContainer>
-            <form>
-                <input
-                    type="text"
-                    onChange={(e) => setPoeSessId(e.target.value)}
-                    placeholder="POE Session Id"
-                    required
-                />
-                <input
-                    type="text"
-                    defaultValue={accountName}
-                    onChange={(e) => setAccountName(e.target.value)}
-                    placeholder="Account Name"
-                    required
-                />
-                <input
-                    type="text"
-                    defaultValue={league}
-                    onChange={(e) => setLeague(e.target.value)}
-                    placeholder="League"
-                />
-            </form>
-            <TabBrowser poeInfo={{ poeSessId, accountName, league }} />
+            <AccountForm />
+            {loggedIn && (
+                <>
+                    <p>{poeCreds.accountName} has {tabs.length} stash tabs.</p>
+                    <TabBrowser tabData={tabs} />
+                </>
+            )}
         </HomeContainer>
     );
 };

@@ -6,6 +6,7 @@ import { ApolloProvider } from "react-apollo-hooks";
 import { ApolloClient } from "apollo-boost";
 import { withApollo } from "../lib";
 import { Footer, Header } from "../shared-components";
+import { AccountProvider } from "../context";
 
 type Props = {
     apollo: ApolloClient<any>;
@@ -37,13 +38,15 @@ class MyApp extends App<Props> {
         return (
             <NextContainer>
                 <ApolloProvider client={apollo}>
-                    <ContainerStyles>
-                        <Header />
-                        <FlexContent>
-                            <Component {...pageProps} />
-                        </FlexContent>
-                        <Footer />
-                    </ContainerStyles>
+                    <AccountProvider>
+                        <ContainerStyles>
+                            <Header />
+                            <FlexContent>
+                                <Component {...pageProps} />
+                            </FlexContent>
+                            <Footer />
+                        </ContainerStyles>
+                    </AccountProvider>
                 </ApolloProvider>
             </NextContainer>
         );

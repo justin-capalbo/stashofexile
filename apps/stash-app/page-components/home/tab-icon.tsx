@@ -31,8 +31,6 @@ type Props = {
     handleClick: () => void,
 };
 
-const TabIcon: React.FC<Props> = React.memo(({ color, name, selected, handleClick }) => (
+export const TabIcon: React.FC<Props> = React.memo(({ color, name, selected, handleClick }) => (
     <TabName onClick={handleClick} selected={selected} {...color}>{name}</TabName>
 ));
-
-export default TabIcon;

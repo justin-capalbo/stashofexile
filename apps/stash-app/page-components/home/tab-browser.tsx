@@ -1,30 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import ItemsCollection from "./items-collection";
-import TabPicker from "./tab-picker";
-import { PoeInfo } from "../../models/globalTypes";
-import { AllItemsQuery, AllItemsQueryVariables } from "../../models/AllItemsQuery";
+import { TabPicker } from "./tab-picker";
+import { AccountContext } from "../../context";
+import { AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
+import { SingleTabItemsQuery, SingleTabItemsQueryVariables } from "../../models/SingleTabItemsQuery";
 
 const TabStyles = styled.div`
     margin: 15px;
     text-align: center;
 `;
 
-const ACCOUNT_INFO_QUERY = gql`
-    query AllItemsQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
+const SINGLE_TAB_ITEMS_QUERY = gql`
+    query SingleTabItemsQuery($poeInfo: PoeInfo!, $tabIndex: Int) {
         getTabs(poeInfo: $poeInfo, tabIndex: $tabIndex) {
-            numTabs
-            tabs {
-                name
-                index
-                color {
-                    r
-                    g
-                    b
-                }
-            }
             items {
                 image
                 baseName
@@ -35,31 +26,32 @@ const ACCOUNT_INFO_QUERY = gql`
 `;
 
 type Props = {
-    poeInfo: PoeInfo,
+    tabData: AccountInfoQuery_getTabs_tabs[];
 };
 
-const TabBrowser: React.FC<Props> = ({ poeInfo }) => {
-    const [selectedTab, setSelectedTab] = useState<number>(undefined);
+export const TabBrowser: React.FC<Props> = ({ tabData }) => {
+    const [selectedTab, setSelectedTab] = useState<number>(0);
+    const { poeCreds } = useContext(AccountContext);
+
     const { data: { getTabs }, loading, error } =
-        useQuery<AllItemsQuery, AllItemsQueryVariables>(
-            ACCOUNT_INFO_QUERY, {
+        useQuery<SingleTabItemsQuery, SingleTabItemsQueryVariables>(
+            SINGLE_TAB_ITEMS_QUERY, {
             suspend: false,
             variables: {
-                poeInfo,
+                poeInfo: poeCreds,
                 tabIndex: selectedTab,
             },
         });
 
-    if (loading) return <p>Loading stash...</p>;
-    if (error) return <p>Error loading stash: {error.message}</p>;
-    const { tabs, numTabs, items } = getTabs;
+    const itemsCollection =
+        loading ? <p>Loading items...</p>
+        : error ? <p>Error loading stash: {error.message}</p>
+        : getTabs && <ItemsCollection items={getTabs.items} />;
+
     return (
         <TabStyles>
-            <p>{poeInfo.accountName} has {numTabs} stash tabs.</p>
-            <TabPicker tabs={tabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-            <ItemsCollection items={items} />
+            <TabPicker tabs={tabData} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+            {itemsCollection}
         </TabStyles>
     );
 };
-
-export default TabBrowser;
