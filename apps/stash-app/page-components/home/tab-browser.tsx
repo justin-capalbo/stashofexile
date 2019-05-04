@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import ItemsForTab from "./items-collection";
+import ItemsForTab from "./items-for-tab";
 import { TabPicker } from "./tab-picker";
 import { AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
 
