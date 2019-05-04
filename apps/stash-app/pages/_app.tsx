@@ -13,6 +13,7 @@ type Props = {
 };
 
 const ContainerStyles = styled.div`
+    margin-top: 16px;
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;

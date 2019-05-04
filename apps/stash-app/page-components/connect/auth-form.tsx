@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
-import styled from "@emotion/styled";
 import { useApolloClient } from "react-apollo-hooks";
+import Router from "next/router";
+import styled from "@emotion/styled";
 import gql from "graphql-tag";
 import {
     AccountInfoQueryVariables,
@@ -56,6 +57,7 @@ export const AuthForm: React.FC = () => {
                         accountName,
                         league,
                     }, res.data.getTabs.tabs);
+                    Router.push("/");;
                 }
             }}>
                 <input
