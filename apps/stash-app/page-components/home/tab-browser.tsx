@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "@emotion/styled";
 import gql from "graphql-tag";
-import { useQuery } from "react-apollo-hooks";
+import { useQuery, useApolloClient } from "react-apollo-hooks";
 import ItemsCollection from "./items-collection";
 import { TabPicker } from "./tab-picker";
 import { AccountContext } from "../../context";
 import { AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
-import { SingleTabItemsQuery, SingleTabItemsQueryVariables } from "../../models/SingleTabItemsQuery";
+import { SingleTabItemsQuery, SingleTabItemsQueryVariables, SingleTabItemsQuery_getTabs_items } from "../../models/SingleTabItemsQuery";
 
 const TabStyles = styled.div`
     margin: 15px;
@@ -29,29 +29,45 @@ type Props = {
     tabData: AccountInfoQuery_getTabs_tabs[];
 };
 
-export const TabBrowser: React.FC<Props> = ({ tabData }) => {
+export const TabBrowser: React.FC<Props> = React.memo(({ tabData }) => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
+    const [items, setItems] = useState<SingleTabItemsQuery_getTabs_items[]>([]);
+    const [itemsLoaded, setItemsLoaded] = useState(false);
+    const [loading, setLoading] = useState(false);
     const { poeCreds } = useContext(AccountContext);
+    const client = useApolloClient();
 
-    const { data: { getTabs }, loading, error } =
-        useQuery<SingleTabItemsQuery, SingleTabItemsQueryVariables>(
-            SINGLE_TAB_ITEMS_QUERY, {
-            suspend: false,
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        const res = await client.query<SingleTabItemsQuery, SingleTabItemsQueryVariables>({
+            query: SINGLE_TAB_ITEMS_QUERY,
             variables: {
                 poeInfo: poeCreds,
                 tabIndex: selectedTab,
             },
         });
+        if (res.data.getTabs) {
+            setItems(res.data.getTabs.items);
+            setItemsLoaded(true);
+            setLoading(false);
+        }
+    }, [selectedTab]);
 
-    const itemsCollection =
-        loading ? <p>Loading items...</p>
-        : error ? <p>Error loading stash: {error.message}</p>
-        : getTabs && <ItemsCollection items={getTabs.items} />;
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     return (
         <TabStyles>
-            <TabPicker tabs={tabData} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-            {itemsCollection}
+            {itemsLoaded &&
+                <>
+                    <TabPicker tabs={tabData} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+                    {loading
+                        ? <p>Loading...</p>
+                        : <ItemsCollection items={items} />
+                    }
+                </>
+            }
         </TabStyles>
     );
-};
+});
