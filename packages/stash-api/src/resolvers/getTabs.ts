@@ -2,7 +2,7 @@ import { TabsArgs, TabData, Tab, Item } from "../models";
 import axios, { AxiosRequestConfig } from "axios";
 import { PoeTabsResponse } from "poe-models";
 
-// Gettin pretty big...
+// TODO: Use two queries
 const getTabs = async ({ poeInfo, tabIndex }: TabsArgs): Promise<TabData> => {
     const { accountName, league, poeSessId } = poeInfo;
     const includeItems = tabIndex !== undefined ? `&tabIndex=${tabIndex}` : "";
@@ -15,6 +15,7 @@ const getTabs = async ({ poeInfo, tabIndex }: TabsArgs): Promise<TabData> => {
         url,
         headers,
     };
+
     const response = await axios(request);
 
     if (response.status !== 200) {
