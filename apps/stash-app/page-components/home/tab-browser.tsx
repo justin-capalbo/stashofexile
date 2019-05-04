@@ -37,25 +37,24 @@ export const TabBrowser: React.FC<Props> = React.memo(({ tabData }) => {
     const { poeCreds } = useContext(AccountContext);
     const client = useApolloClient();
 
-    const fetchData = useCallback(async () => {
-        setLoading(true);
-        const res = await client.query<SingleTabItemsQuery, SingleTabItemsQueryVariables>({
-            query: SINGLE_TAB_ITEMS_QUERY,
-            variables: {
-                poeInfo: poeCreds,
-                tabIndex: selectedTab,
-            },
-        });
-        if (res.data.getTabs) {
-            setItems(res.data.getTabs.items);
-            setItemsLoaded(true);
-            setLoading(false);
-        }
-    }, [selectedTab]);
-
     useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            const res = await client.query<SingleTabItemsQuery, SingleTabItemsQueryVariables>({
+                query: SINGLE_TAB_ITEMS_QUERY,
+                variables: {
+                    poeInfo: poeCreds,
+                    tabIndex: selectedTab,
+                },
+            });
+            if (res.data.getTabs) {
+                setItems(res.data.getTabs.items);
+                setItemsLoaded(true);
+                setLoading(false);
+            }
+        };
         fetchData();
-    }, [fetchData]);
+    }, [selectedTab]);
 
     return (
         <TabStyles>
