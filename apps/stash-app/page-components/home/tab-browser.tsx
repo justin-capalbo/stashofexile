@@ -22,7 +22,7 @@ export const TabBrowser: React.FC<Props> = React.memo(({ tabData }) => {
                 <TabPicker tabs={tabData} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
                 {error && <p>{error}</p>}
                 {itemsLoading && <p>Loading...</p>}
-                {items && <ItemsCollection items={items} />}
+                {!itemsLoading && items && <ItemsCollection items={items} />}
             </>
         </TabStyles>
     );
