@@ -25,6 +25,7 @@ const SINGLE_TAB_ITEMS_QUERY = gql`
  * Searches for item information in a stash tab by its' index.
  * Requires both Apollo and Account context providers in the parent component tree.
  * @param selectedTab The index of the desired tab
+ * @returns Items in the given tab, unless loading due to changing tabs.
  */
 export const useStashTab = (selectedTab: number) => {
     const client = useApolloClient();
@@ -56,6 +57,7 @@ export const useStashTab = (selectedTab: number) => {
             }
 
         };
+        setItems([]);
         fetchData();
     }, [selectedTab]);
 
