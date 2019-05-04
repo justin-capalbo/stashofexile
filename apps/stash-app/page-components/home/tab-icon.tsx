@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { AllItemsQuery_getTabs_tabs_color } from "../../models/AllItemsQuery";
+import { AccountInfoQuery_getTabs_tabs_color } from "../../models/AccountInfoQuery";
 
-type TabNameProps = AllItemsQuery_getTabs_tabs_color & { selected: boolean };
+type TabNameProps = AccountInfoQuery_getTabs_tabs_color & { selected: boolean };
 const TabName = styled.button<TabNameProps>`
     font-weight: bold;
 	border-radius: 12% 12% 2% 2%;
@@ -11,7 +11,6 @@ const TabName = styled.button<TabNameProps>`
     padding: 7px;
     cursor: pointer;
     margin-right: 1px;
-    margin-top: 5px;
     background-color: ${({ r, g, b }) => `rgb(${r} ${g} ${b})`};
 	color: ${({ r, g, b}) => {
         const luma = (0.2126 * r + 0.7152 * g + 0.0722 * b);
@@ -26,7 +25,7 @@ const TabName = styled.button<TabNameProps>`
 
 type Props = {
     name: string,
-    color: AllItemsQuery_getTabs_tabs_color,
+    color: AccountInfoQuery_getTabs_tabs_color,
     selected: boolean,
     handleClick: () => void,
 };

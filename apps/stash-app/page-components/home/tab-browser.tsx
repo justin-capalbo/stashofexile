@@ -6,7 +6,7 @@ import { AccountInfoQuery_getTabs_tabs } from "../../models/AccountInfoQuery";
 import { useStashTab } from "../../hooks/use-stash-tab";
 
 const TabStyles = styled.div`
-    margin: 15px;
+    margin: 8px;
     text-align: center;
 `;
 
@@ -21,10 +21,8 @@ export const TabBrowser: React.FC<Props> = React.memo(({ tabData }) => {
             <>
                 <TabPicker tabs={tabData} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
                 {error && <p>{error}</p>}
-                {itemsLoading
-                    ? <p>Loading...</p>
-                    : <ItemsCollection items={items} />
-                }
+                {itemsLoading && <p>Loading...</p>}
+                {items && <ItemsCollection items={items} />}
             </>
         </TabStyles>
     );
